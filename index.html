@@ -1,74 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Database Project</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; }
-        .card { border: 1px solid #ccc; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
-        input, text-area, button { display: block; width: 100%; margin-bottom: 10px; padding: 8px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name | Game Developer Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F8F7; --surface:#FFFFFF; --ink:#14201B; --soft:#56625C; --line:#DADFDB;
+  --green:#1F4D3F; --gold:#9A7840; --on-green:#F7F8F7;
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Jost','Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#0F1613; --surface:#16201C; --ink:#EEF1EE; --soft:#A2ADA7; --line:#27342E; --green:#7FB8A2; --gold:#C9A96A; --on-green:#0F1613}
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;font-size:1.05rem;line-height:1.75}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.wrap{max-width:980px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--serif);font-weight:500;margin:0;line-height:1.1}
+
+/* header */
+header{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;justify-content:space-between;align-items:center;height:68px}
+.logo{font-family:var(--serif);font-size:1.5rem;font-weight:600;text-decoration:none;letter-spacing:.02em}
+nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+nav a{text-decoration:none;font-weight:400;font-size:.95rem;color:var(--soft);padding:4px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+nav a:hover,nav a.on{color:var(--ink);border-color:var(--gold)}
+.menu{display:none;background:none;border:1px solid var(--line);color:var(--ink);padding:8px 14px;border-radius:4px;font:inherit;cursor:pointer}
+
+/* hero */
+.hero{padding:clamp(70px,12vw,140px) 0 80px;display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(3rem,8vw,5.6rem);letter-spacing:-.01em;margin-bottom:22px}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero p{max-width:30em;color:var(--soft);font-size:1.15rem;margin:0 0 32px}
+.btn{display:inline-block;text-decoration:none;font:inherit;font-weight:400;letter-spacing:.03em;padding:13px 30px;border:1px solid var(--green);background:var(--green);color:var(--on-green);border-radius:2px;cursor:pointer;transition:opacity .2s}
+.btn:hover{opacity:.88}
+.btn.line{background:transparent;color:var(--ink);border-color:var(--ink);margin-left:10px}
+.portrait{aspect-ratio:4/5;border:1px solid var(--gold);border-radius:200px 200px 4px 4px;background:var(--surface);display:grid;place-items:center;font-family:var(--serif);font-size:3.4rem;color:var(--gold);position:relative}
+.portrait::after{content:"";position:absolute;inset:10px;border:1px solid var(--line);border-radius:190px 190px 2px 2px;pointer-events:none}
+
+/* sections */
+section{padding:84px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(2rem,5vw,2.8rem);margin-bottom:10px}
+h2::after{content:"";display:block;width:48px;height:1px;background:var(--gold);margin-top:16px}
+.lead{color:var(--soft);max-width:38em;margin:22px 0 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:36px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:14px 0 0}
+.tags li{font-size:.88rem;font-weight:400;border:1px solid var(--line);padding:4px 14px;border-radius:999px;background:var(--surface)}
+
+/* social */
+.social{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.social a{text-decoration:none;font-weight:400;border:1px solid var(--line);background:var(--surface);padding:12px 24px;border-radius:2px;transition:border-color .2s,transform .2s}
+.social a:hover{border-color:var(--gold);transform:translateY(-2px)}
+
+/* timeline / lists */
+.rows{margin-top:34px}
+.row{display:grid;grid-template-columns:150px 1fr;gap:24px;padding:22px 0;border-top:1px solid var(--line)}
+.row:last-child{border-bottom:1px solid var(--line)}
+.row time{color:var(--gold);font-weight:400;font-size:.95rem}
+.row h3{font-size:1.45rem;margin-bottom:4px}
+.row p{margin:0;color:var(--soft)}
+
+/* projects */
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:26px;margin-top:36px}
+.project{background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
+.project:hover{border-color:var(--gold);transform:translateY(-3px)}
+.thumb{aspect-ratio:16/10;background:linear-gradient(135deg,var(--green),color-mix(in srgb,var(--green) 40%,var(--bg)));display:grid;place-items:center;color:var(--on-green);font-family:var(--serif);font-style:italic;font-size:1.3rem}
+.project .body{padding:22px;display:flex;flex-direction:column;flex:1}
+.project h3{font-size:1.5rem;margin-bottom:8px}
+.project p{margin:0;color:var(--soft);font-size:.98rem}
+.project a{margin-top:auto;padding-top:16px;font-weight:400;color:var(--gold)}
+
+/* contact form */
+form{margin-top:34px;max-width:560px;display:grid;gap:18px}
+label{font-weight:400;font-size:.92rem}
+input,textarea{width:100%;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);padding:13px 14px;border-radius:2px;margin-top:6px}
+input:focus,textarea:focus{outline:none;border-color:var(--gold)}
+textarea{min-height:150px;resize:vertical}
+button.btn:disabled{opacity:.5;cursor:wait}
+#status{min-height:1.6em;margin:0;font-weight:400}
+#status.ok{color:var(--green)} #status.err{color:#C0504D}
+footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:var(--soft);font-size:.9rem}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+@media (max-width:760px){
+  .menu{display:block}
+  nav{position:absolute;left:0;right:0;top:68px;background:var(--bg);border-bottom:1px solid var(--line);display:none}
+  nav.open{display:block}
+  nav ul{flex-direction:column;gap:0;padding:8px 24px 16px}
+  nav a{display:block;padding:10px 0}
+  .hero,.grid2{grid-template-columns:1fr}
+  .portrait{max-width:260px;order:-1}
+  .row{grid-template-columns:1fr;gap:4px}
+  .btn.line{margin:12px 0 0}
+}
+</style>
 </head>
 <body>
-    <h2>Add New Record</h2>
-    <form id="dataForm">
-        <input type="text" id="title" placeholder="Record Title" required>
-        <input type="text" id="content" placeholder="Record Content" required>
-        <button type="submit">Submit to Database</button>
-    </form>
 
-    <h2>Database Records</h2>
-    <div id="recordsContainer">Loading...</div>
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="#top">Izabela Dorinne P. Ronquillo</a>
+    <button class="menu" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav id="nav" aria-label="Main">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#social">Social</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-    <script>
-        const VERCEL_API_URL = 'https://student-api-backend-mu.vercel.app/api';
+<main id="top">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <h1>Crafting worlds, <em>one level</em> at a time.</h1>
+        <p>I’m Izabela Ronquillo, a third-year BS Information Technology student majoring in Game Development. I design and build playable experiences, from first prototype to final polish.</p>
+        <a class="btn" href="#projects">View my games</a><a class="btn line" href="#contact">Contact me</a><a class="btn line" href="attendance.html">Attendance</a>
+      </div>
+      <div class="portrait" role="img" aria-label="Profile photo placeholder">YN</div>
+    </div>
+  </div>
 
-        async function loadRecords() {
-            try {
-                const response = await fetch(VERCEL_API_URL);
-                const records = await response.json();
+  <section id="about">
+    <div class="wrap reveal">
+      <h2>About</h2>
+      <p class="lead">I love the space where code, art and storytelling meet. I enjoy building gameplay systems, designing levels, and testing ideas with friends until they feel right. I’m looking for internships where I can grow as a game developer.</p>
+      <div class="grid2">
+        <div><h3>Tools</h3><ul class="tags"><li>Unity</li><li>C#</li><li>Godot</li><li>Blender</li><li>Git</li><li>Figma</li></ul></div>
+        <div><h3>Interests</h3><ul class="tags"><li>Gameplay programming</li><li>Level design</li><li>2D and 3D art</li><li>Game jams</li></ul></div>
+      </div>
+    </div>
+  </section>
 
-                const container = document.getElementById('recordsContainer');
-                container.innerHTML = '';
+  <section id="social">
+    <div class="wrap reveal">
+      <h2>Social</h2>
+      <p class="lead">Find me and my work around the web.</p>
+      <div class="social">
+        <a href="https://github.com/Izabela-Ronquillo" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.facebook.com/Izabelaronquillo" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.instagram.com/hnceyed.09" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.credly.com/users/izabela-ronquillo" target="_blank" rel="noopener">Credly</a>
+      </div>
+    </div>
+  </section>
 
-                if(records.length === 0) {
-                    container.innerHTML = '<p>No records found.</p>';
-                    return;
-                }
+  <section id="education">
+    <div class="wrap reveal">
+      <h2>Education</h2>
+      <div class="rows">
+        <div class="row"><time>2023 – Present</time><div><h3>BS Information Technology, Game Development</h3><p>Your University. Currently in 3rd year.</p></div></div>
+        <div class="row"><time>2021 – 2023</time><div><h3>Senior High School, ICT Strand</h3><p>Your School. Graduated with honors.</p></div></div>
+      </div>
+    </div>
+  </section>
 
-                records.forEach(record => {
-                    const div = document.createElement('div');
-                    div.className = 'card';
-                    div.innerHTML = `<strong>${record.title}</strong><br>${record.content}`;
-                    container.appendChild(div);
-                });
-            } catch (error) {
-                document.getElementById('recordsContainer').innerText = 'Error loading records.';
-            }
-        }
+  <section id="certifications">
+    <div class="wrap reveal">
+      <h2>Certifications</h2>
+      <div class="rows">
+        <div class="row"><time>2026</time><div><h3>IT Specialist</h3></div>
+        <div class="row"><time>2026</time><div><h3>Networking Basics</h3></div>
+        <div class="row"><time>2026</time><div><h3>CRUD Operations in MongoDB</h3></div>
+        <div class="row"><time>2026</time><div><h3>Building RAG Apps Using MongoDB</h3></div>
+        <div class="row"><time>2026</time><div><h3>From Relational Model (SQL) to MongoDBs Document Model</h3></div>
+        <div class="row"><time>2026</time><div><h3>MongoDB Overview: Core Concepts and Architecture</h3></div>
+        <div class="row"><time>2026</time><div><h3>MongoDB Query Optimization Techniques</h3></div>
+        <div class="row"><time>2026</time><div><h3>Optimizing and Maintaining MongoDB Cluster Reliability</h3></div>
+      </div>
+    </div>
+  </section>
 
-        document.getElementById('dataForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+  <section id="projects">
+    <div class="wrap reveal">
+      <h2>Projects</h2>
+      <div class="projects">
+        <article class="project"><div class="body"><h3>Side Scroll Brawler</h3><p>A 2D platformer built in Unity with tight controls, three levels and a boss fight.</p><ul class="tags"><li>Unity</li><li>C#</li></ul><a href="https://github.com/Izabela-Ronquillo/Side-Scroll-Brawler" target="_blank" rel="noopener">Github</a></div></article>
+        <article class="project"><div class="body"><h3>Personal Portfolio</h3><p>My personal portfolio website, built with HTML, CSS and JavaScript to showcase my projects and skills.</p><ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul><a href="https://github.com/Izabela-Ronquillo/Porfolio-Izabela-Ronquilo" target="_blank" rel="noopener">Github</a></div></article>
+        <article class="project"><div class="body"><h3>GateHub</h3><p>A project I built as part of my BSIT studies. Add a short description of what GateHub does here.</p><ul class="tags"><li>Add tools</li></ul><a href="https://github.com/Izabela-Ronquillo/GateHub" target="_blank" rel="noopener">Github</a></div></article>
+      </div>
+    </div>
+  </section>
 
-            const title = document.getElementById('title').value;
-            const content = document.getElementById('content').value;
+  <section id="contact">
+    <div class="wrap reveal">
+      <h2>Contact</h2>
+      <p class="lead">Have an opportunity or a game idea? Send me a message below.</p>
+      <form id="dataForm">
+        <label>Subject
+          <input type="text" id="title" placeholder="What is this about?" required>
+        </label>
+        <label>Message
+          <textarea id="content" placeholder="Write your message here" required></textarea>
+        </label>
+        <button type="submit" class="btn" id="sendBtn">Send message</button>
+        <p id="status" role="status"></p>
+      </form>
+    </div>
+  </section>
+</main>
 
-            try {
-                await fetch(VERCEL_API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ title, content })
-                });
+<footer>© <span id="year">2026</span> Your Name. Built with HTML, CSS and JavaScript.</footer>
 
-                document.getElementById('dataForm').reset();
-                loadRecords();
-            } catch (error) {
-                alert('Failed to submit record.');
-            }
-        });
+<script>
+  // ----- Contact form: keeps the same two fields (title, content) and your API -----
+  const VERCEL_API_URL = 'https://student-api-backend-mu.vercel.app/api';
+  const form = document.getElementById('dataForm');
+  const statusEl = document.getElementById('status');
+  const sendBtn = document.getElementById('sendBtn');
 
-        loadRecords();
-    </script>
+  function setStatus(text, type) {
+    statusEl.textContent = text;
+    statusEl.className = type || '';
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const title = document.getElementById('title').value.trim();
+    const content = document.getElementById('content').value.trim();
+    if (!title || !content) return;
+
+    sendBtn.disabled = true;
+    setStatus('Sending…');
+    try {
+      const response = await fetch(VERCEL_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, content })
+      });
+      if (!response.ok) throw new Error('Request failed');
+      form.reset();
+      setStatus('Thank you! Your message was sent.', 'ok');
+    } catch (error) {
+      setStatus('Sorry, your message could not be sent. Please try again.', 'err');
+    } finally {
+      sendBtn.disabled = false;
+    }
+  });
+
+  // ----- Mobile menu -----
+  const menuBtn = document.getElementById('menuBtn');
+  const nav = document.getElementById('nav');
+  menuBtn.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  });
+  nav.addEventListener('click', (e) => {
+    if (e.target.tagName === 'A') { nav.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+  });
+
+  // ----- Highlight current section in the nav -----
+  const links = [...nav.querySelectorAll('a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href')));
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + en.target.id));
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  sections.forEach(s => s && spy.observe(s));
+
+  // ----- Soft reveal on scroll -----
+  const reveal = new IntersectionObserver((entries) => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); reveal.unobserve(en.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => reveal.observe(el));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
