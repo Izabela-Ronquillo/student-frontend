@@ -15,14 +15,14 @@
 <body>
     <h2><a href="index.html">Back</a></h2>
     <h2>Daily Attendance</h2>
-    <div id="recordsContainer">Loading...</div>
+    <div id="daily_attendanceContainer">Loading...</div>
     <script>
         const VERCEL_API_URL = 'https://student-api-backend-mu.vercel.app/api/daily_attendance';
         async function loadRecords() {
             try {
                 const response = await fetch(VERCEL_API_URL);
                 const records = await response.json();
-                const container = document.getElementById('recordsContainer');
+                const container = document.getElementById('daily_attendanceContainer');
                 container.innerHTML = '';
                 if (!records.length) { container.innerHTML = '<p>No attendance records found.</p>'; return; }
                 const keys = Object.keys(records[0]).filter(k => !k.startsWith('_') && k !== '__v');
@@ -33,7 +33,7 @@
                 html += '</tbody></table>';
                 container.innerHTML = html;
             } catch (error) {
-                document.getElementById('recordsContainer').innerText = 'Error loading records.';
+                document.getElementById('daily_attendaceContainer').innerText = 'Error loading records.';
             }
         }
         loadRecords();
