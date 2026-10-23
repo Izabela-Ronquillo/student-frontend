@@ -15,7 +15,7 @@
   --bg:#F5F8FF; --surface:#FFFFFF; --ink:#23305A; --soft:#69769A; --line:#E0E7F6;
   --sky:#DCE8FC; --mint:#E3EDFF; --lav:#ECE8FD;
   --accent:#7C6CF0; --accent-dark:#6154D4; --on-accent:#FFFFFF;
-  --glass:rgba(245,248,255,.85); --panel:rgba(255,255,255,.72); --tag-blue:#3F66B8; --hover-line:var(--hover-line); --ring:var(--ring); --dot:var(--dot); --sq2:var(--sq2);
+  --glass:rgba(245,248,255,.85); --panel:rgba(255,255,255,.72); --tag-blue:#3F66B8; --hover-line:#CDC6F8; --ring:#D3CCF9; --dot:#B9C6EE; --sq2:#A99DF7;
   --blob1:#CFE0FF; --blob2:#DDD3FB; --blob3:#CDE6FB; --blob-o:.6; --p2:#E6E4FC; --p3:#EFE6FB; --ok:#3E7A63; --err:#C0504D;
   --serif:'DM Serif Display',Georgia,serif; --sans:'Nunito Sans','Segoe UI',sans-serif;
 }
@@ -118,7 +118,7 @@ section .wrap{position:relative}
 section:nth-of-type(odd) .wrap::before{content:"";position:absolute;top:-6px;right:24px;width:54px;height:54px;border-radius:50%;border:1.5px solid var(--ring);pointer-events:none}
 section:nth-of-type(even) .wrap::before{content:"";position:absolute;top:6px;right:44px;width:22px;height:22px;pointer-events:none;opacity:.55;background:linear-gradient(var(--accent),var(--accent)) center/100% 1.5px no-repeat,linear-gradient(var(--accent),var(--accent)) center/1.5px 100% no-repeat}
 #contact .wrap::after{content:"";position:absolute;right:24px;bottom:0;width:200px;height:140px;pointer-events:none;background:radial-gradient(circle,var(--dot) 1.3px,transparent 1.6px) 0 0/20px 20px;-webkit-mask-image:radial-gradient(circle at 70% 70%,#000 10%,transparent 70%);mask-image:radial-gradient(circle at 70% 70%,#000 10%,transparent 70%)}
-h2::before{content:"";display:block;width:8px;height:8px;margin-bottom:14px;background:var(--accent);box-shadow:11px 0 0 #A99DF7,22px 0 0 var(--ring)}
+h2::before{content:"";display:block;width:8px;height:8px;margin-bottom:14px;background:var(--accent);box-shadow:11px 0 0 var(--sq2),22px 0 0 var(--ring)}
 @media (max-width:860px){.hero::after,#contact .wrap::after{display:none}.hero::before{right:0;top:0;width:200px;height:200px}}
 
 /* ---- theme toggle + back to top ---- */
