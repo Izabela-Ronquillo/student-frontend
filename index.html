@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light">
+<meta name="color-scheme" content="light dark">
+<script>try{var t=localStorage.getItem("theme");if(!t&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
 <title>Izabela Dorinne P. Ronquillo | Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,8 +15,19 @@
   --bg:#F5F8FF; --surface:#FFFFFF; --ink:#23305A; --soft:#69769A; --line:#E0E7F6;
   --sky:#DCE8FC; --mint:#E3EDFF; --lav:#ECE8FD;
   --accent:#7C6CF0; --accent-dark:#6154D4; --on-accent:#FFFFFF;
+  --glass:rgba(245,248,255,.85); --panel:rgba(255,255,255,.72); --tag-blue:#3F66B8; --hover-line:var(--hover-line); --ring:var(--ring); --dot:var(--dot); --sq2:var(--sq2);
+  --blob1:#CFE0FF; --blob2:#DDD3FB; --blob3:#CDE6FB; --blob-o:.6; --p2:#E6E4FC; --p3:#EFE6FB; --ok:#3E7A63; --err:#C0504D;
   --serif:'DM Serif Display',Georgia,serif; --sans:'Nunito Sans','Segoe UI',sans-serif;
 }
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E1426; --surface:#151D36; --ink:#E8ECFA; --soft:#9AA7C9; --line:#26304F;
+  --sky:#1E2D55; --mint:#1A2748; --lav:#2A2455;
+  --accent:#9B8CFF; --accent-dark:#B3A8FF; --on-accent:#14122E;
+  --glass:rgba(14,20,38,.85); --panel:rgba(21,29,54,.6); --tag-blue:#8FB4FF; --hover-line:#4B4390; --ring:#3A3470; --dot:#34406B; --sq2:#6E62D6;
+  --blob1:#1F3A7A; --blob2:#3B2F8A; --blob3:#1B4A7A; --blob-o:.32; --p2:#2A2A66; --p3:#352A66; --ok:#6FD1A8; --err:#FF8A87;
+}
+body,header,.row,.project,.social a,.chip,input,textarea{transition:background-color .35s,border-color .35s,color .35s}
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:84px}
 body{margin:0;overflow-x:hidden;background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:400;font-size:1.02rem;line-height:1.75}
@@ -27,7 +39,7 @@ h1,h2{font-family:var(--serif);font-weight:400}
 h3{font-weight:600;font-size:1.05rem}
 
 /* header */
-header{position:sticky;top:0;z-index:10;background:rgba(245,248,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header{position:sticky;top:0;z-index:10;background:var(--glass);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .bar{display:flex;justify-content:space-between;align-items:center;height:68px}
 .logo{font-family:var(--serif);font-size:1.3rem;text-decoration:none}
 nav ul{display:flex;gap:6px;list-style:none;margin:0;padding:0}
@@ -44,18 +56,18 @@ nav a.on{background:var(--sky);color:var(--accent-dark);font-weight:600}
 .btn:hover{background:var(--accent-dark);border-color:var(--accent-dark)}
 .btn.line{background:transparent;color:var(--accent-dark);margin-left:8px}
 .btn.line:hover{background:var(--sky);border-color:var(--accent)}
-.portrait{aspect-ratio:4/5;border-radius:999px 999px 28px 28px;background:linear-gradient(160deg,var(--sky),#E6E4FC 65%,#EFE6FB);display:grid;place-items:center;text-align:center;padding:20px;font-family:var(--serif);font-size:2rem;color:var(--accent-dark);box-shadow:0 20px 50px -25px rgba(124,108,240,.4)}
+.portrait{aspect-ratio:4/5;border-radius:999px 999px 28px 28px;background:linear-gradient(160deg,var(--sky),var(--p2) 65%,var(--p3));display:grid;place-items:center;text-align:center;padding:20px;font-family:var(--serif);font-size:2rem;color:var(--accent-dark);box-shadow:0 20px 50px -25px rgba(124,108,240,.4)}
 
 /* sections */
 section{padding:76px 0}
-section:nth-of-type(even){background:rgba(255,255,255,.72);border-block:1px solid var(--line)}
+section:nth-of-type(even){background:var(--panel);border-block:1px solid var(--line)}
 h2{font-size:clamp(1.9rem,4.5vw,2.5rem)}
 h2::after{content:"";display:block;width:44px;height:3px;border-radius:3px;background:var(--accent);opacity:.5;margin-top:14px}
 .lead{color:var(--soft);max-width:38em;margin:20px 0 0}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:34px}
 .tags{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:14px 0 0}
-.tags li{font-size:.86rem;font-weight:600;padding:4px 14px;border-radius:999px;background:var(--sky);color:#3F66B8}
-.grid2>div:nth-child(2) .tags li{background:var(--lav);color:#6154D4}
+.tags li{font-size:.86rem;font-weight:600;padding:4px 14px;border-radius:999px;background:var(--sky);color:var(--tag-blue)}
+.grid2>div:nth-child(2) .tags li{background:var(--lav);color:var(--accent-dark)}
 .project .tags li{background:var(--lav);color:var(--accent-dark)}
 
 /* social */
@@ -78,7 +90,7 @@ section:nth-of-type(even) .row{background:var(--bg)}
 /* projects */
 .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:24px;margin-top:34px}
 .project{background:var(--surface);border:1px solid var(--line);border-radius:20px;display:flex;flex-direction:column;transition:box-shadow .25s,border-color .25s}
-.project:hover{border-color:#CDC6F8;box-shadow:0 18px 40px -22px rgba(124,108,240,.35)}
+.project:hover{border-color:var(--hover-line);box-shadow:0 18px 40px -22px rgba(124,108,240,.35)}
 .project .body{padding:26px;display:flex;flex-direction:column;flex:1}
 .project h3{font-family:var(--serif);font-weight:400;font-size:1.4rem;margin-bottom:8px}
 .project p{margin:0;color:var(--soft);font-size:.96rem}
@@ -94,28 +106,41 @@ textarea{min-height:150px;resize:vertical}
 form .btn{justify-self:start}
 button.btn:disabled{opacity:.5;cursor:wait}
 #status{min-height:1.6em;margin:0;font-weight:600}
-#status.ok{color:#3E7A63} #status.err{color:#C0504D}
+#status.ok{color:var(--ok)} #status.err{color:var(--err)}
 footer{padding:34px 0;text-align:center;color:var(--soft);font-size:.9rem}
 
 
 /* ---- minimalist details ---- */
 .hero{position:relative}
-.hero::before{content:"";position:absolute;right:-24px;top:24px;width:280px;height:280px;z-index:0;pointer-events:none;background:radial-gradient(circle,#B9C6EE 1.3px,transparent 1.6px) 0 0/22px 22px;-webkit-mask-image:radial-gradient(circle at 60% 40%,#000 15%,transparent 70%);mask-image:radial-gradient(circle at 60% 40%,#000 15%,transparent 70%);opacity:.75}
-.hero::after{content:"";position:absolute;left:-46px;bottom:24px;width:96px;height:96px;border-radius:50%;border:1.5px solid #CDC6F8;pointer-events:none;animation:bob 6s ease-in-out infinite alternate}
+.hero::before{content:"";position:absolute;right:-24px;top:24px;width:280px;height:280px;z-index:0;pointer-events:none;background:radial-gradient(circle,var(--dot) 1.3px,transparent 1.6px) 0 0/22px 22px;-webkit-mask-image:radial-gradient(circle at 60% 40%,#000 15%,transparent 70%);mask-image:radial-gradient(circle at 60% 40%,#000 15%,transparent 70%);opacity:.75}
+.hero::after{content:"";position:absolute;left:-46px;bottom:24px;width:96px;height:96px;border-radius:50%;border:1.5px solid var(--hover-line);pointer-events:none;animation:bob 6s ease-in-out infinite alternate}
 section .wrap{position:relative}
-section:nth-of-type(odd) .wrap::before{content:"";position:absolute;top:-6px;right:24px;width:54px;height:54px;border-radius:50%;border:1.5px solid #D3CCF9;pointer-events:none}
+section:nth-of-type(odd) .wrap::before{content:"";position:absolute;top:-6px;right:24px;width:54px;height:54px;border-radius:50%;border:1.5px solid var(--ring);pointer-events:none}
 section:nth-of-type(even) .wrap::before{content:"";position:absolute;top:6px;right:44px;width:22px;height:22px;pointer-events:none;opacity:.55;background:linear-gradient(var(--accent),var(--accent)) center/100% 1.5px no-repeat,linear-gradient(var(--accent),var(--accent)) center/1.5px 100% no-repeat}
-#contact .wrap::after{content:"";position:absolute;right:24px;bottom:0;width:200px;height:140px;pointer-events:none;background:radial-gradient(circle,#B9C6EE 1.3px,transparent 1.6px) 0 0/20px 20px;-webkit-mask-image:radial-gradient(circle at 70% 70%,#000 10%,transparent 70%);mask-image:radial-gradient(circle at 70% 70%,#000 10%,transparent 70%)}
-h2::before{content:"";display:block;width:8px;height:8px;margin-bottom:14px;background:var(--accent);box-shadow:11px 0 0 #A99DF7,22px 0 0 #D3CCF9}
+#contact .wrap::after{content:"";position:absolute;right:24px;bottom:0;width:200px;height:140px;pointer-events:none;background:radial-gradient(circle,var(--dot) 1.3px,transparent 1.6px) 0 0/20px 20px;-webkit-mask-image:radial-gradient(circle at 70% 70%,#000 10%,transparent 70%);mask-image:radial-gradient(circle at 70% 70%,#000 10%,transparent 70%)}
+h2::before{content:"";display:block;width:8px;height:8px;margin-bottom:14px;background:var(--accent);box-shadow:11px 0 0 #A99DF7,22px 0 0 var(--ring)}
 @media (max-width:860px){.hero::after,#contact .wrap::after{display:none}.hero::before{right:0;top:0;width:200px;height:200px}}
+
+/* ---- theme toggle + back to top ---- */
+.actions{display:flex;align-items:center;gap:8px}
+.theme{width:40px;height:40px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--accent-dark);cursor:pointer;transition:transform .25s,background .2s,border-color .2s}
+.theme:hover{background:var(--sky);border-color:var(--accent);transform:rotate(18deg)}
+.theme svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.theme .sun{display:none}
+:root[data-theme="dark"] .theme .sun{display:block}
+:root[data-theme="dark"] .theme .moon{display:none}
+.totop{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));z-index:15;width:48px;height:48px;display:grid;place-items:center;border-radius:50%;border:0;background:var(--accent);color:var(--on-accent);cursor:pointer;box-shadow:0 14px 30px -12px rgba(124,108,240,.7);opacity:0;transform:translateY(16px) scale(.9);pointer-events:none;transition:opacity .3s,transform .3s,background .2s}
+.totop.show{opacity:1;transform:none;pointer-events:auto}
+.totop:hover{background:var(--accent-dark);transform:translateY(-3px)}
+.totop svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 
 /* ---- animations ---- */
 main,footer{position:relative;z-index:1}
 .blobs{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
-.blobs i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.6;animation:drift 18s ease-in-out infinite alternate}
-.blobs i:nth-child(1){width:420px;height:420px;background:#CFE0FF;top:-90px;left:-110px}
-.blobs i:nth-child(2){width:380px;height:380px;background:#DDD3FB;top:32%;right:-120px;animation-duration:23s;animation-delay:-6s}
-.blobs i:nth-child(3){width:340px;height:340px;background:#CDE6FB;bottom:-110px;left:35%;animation-duration:20s;animation-delay:-11s}
+.blobs i{position:absolute;border-radius:50%;filter:blur(70px);opacity:var(--blob-o);animation:drift 18s ease-in-out infinite alternate}
+.blobs i:nth-child(1){width:420px;height:420px;background:var(--blob1);top:-90px;left:-110px}
+.blobs i:nth-child(2){width:380px;height:380px;background:var(--blob2);top:32%;right:-120px;animation-duration:23s;animation-delay:-6s}
+.blobs i:nth-child(3){width:340px;height:340px;background:var(--blob3);bottom:-110px;left:35%;animation-duration:20s;animation-delay:-11s}
 .progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:20;transform:scaleX(0);transform-origin:left;background:linear-gradient(90deg,#5B8DEF,#7C6CF0)}
 
 .hero h1{background:linear-gradient(100deg,var(--ink) 25%,var(--accent) 50%,#5B8DEF 75%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rise .8s cubic-bezier(.2,.7,.2,1) backwards,shine 6s ease-in-out infinite alternate}
@@ -142,7 +167,7 @@ main,footer{position:relative;z-index:1}
 .tags li{transition:transform .2s}
 .tags li:hover{transform:translateY(-3px) rotate(-3deg)}
 .row{transition:transform .25s,border-color .25s}
-.row:hover{transform:translateX(6px);border-color:#CDC6F8}
+.row:hover{transform:translateX(6px);border-color:var(--hover-line)}
 .project:hover{transform:translateY(-6px)}
 .project{transition:box-shadow .25s,border-color .25s,transform .25s}
 .btn::after{content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);transition:left .6s}
@@ -182,7 +207,6 @@ main,footer{position:relative;z-index:1}
 <header>
   <div class="wrap bar">
     <a class="logo" href="#top">Izabela Dorinne P. Ronquillo</a>
-    <button class="menu" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav id="nav" aria-label="Main">
       <ul>
         <li><a href="#about">About</a></li>
@@ -193,6 +217,13 @@ main,footer{position:relative;z-index:1}
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
+    <div class="actions">
+      <button class="theme" id="themeBtn" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+        <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button class="menu" id="menuBtn" aria-expanded="false" aria-controls="nav">Menu</button>
+    </div>
   </div>
 </header>
 
@@ -238,7 +269,7 @@ main,footer{position:relative;z-index:1}
       <h2>Education</h2>
       <div class="rows">
         <div class="row"><time>2023 – Present</time><div><h3>BS Information Technology, Game Development</h3><p>Your University. Currently in 3rd year.</p></div></div>
-        <div class="row"><time>2021 – 2023</time><div><h3>Senior High School, ICT Strand</h3><p>Your School. Graduated with honors.</p></div></div>
+        <div class="row"><time>2021 – 2023</time><div><h3>Senior High School, ICT Strand</h3><p>UPHSD – Molino Campus. Graduated with honors.</p></div></div>
       </div>
     </div>
   </section>
@@ -289,6 +320,8 @@ main,footer{position:relative;z-index:1}
 </main>
 
 <footer>© <span id="year">2026</span> Izabela Dorinne P. Ronquillo. Built with HTML, CSS and JavaScript.</footer>
+
+<button class="totop" id="toTop" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 
 <script>
   // ----- Contact form: keeps the same two fields (title, content) and your API -----
@@ -375,10 +408,29 @@ main,footer{position:relative;z-index:1}
     sec.querySelectorAll('.row,.project,.social a,.tags li').forEach((el, i) => el.style.setProperty('--i', i % 8));
   });
   const bar = document.getElementById('progress');
+  const toTop = document.getElementById('toTop');
+  toTop.addEventListener('click', () => window.scrollTo({ top: 0 }));
   addEventListener('scroll', () => {
     const max = document.documentElement.scrollHeight - innerHeight;
     bar.style.transform = 'scaleX(' + (max > 0 ? scrollY / max : 0) + ')';
+    toTop.classList.toggle('show', scrollY > 500);
   }, { passive: true });
+
+  // ----- Dark mode -----
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('themeBtn');
+  function syncTheme() {
+    const dark = root.dataset.theme === 'dark';
+    themeBtn.setAttribute('aria-pressed', dark);
+    themeBtn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+  }
+  themeBtn.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    syncTheme();
+  });
+  syncTheme();
 
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
