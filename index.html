@@ -144,6 +144,8 @@ input:focus,select:focus,.search:focus{outline:none;border-color:var(--accent);b
 <div class="wrap">
   <div class="top">
     <div class="right">
+      <button class="btn line" id="loginBtn" type="button">Login</button>
+      <button class="btn line" id="logoutBtn" type="button" hidden>Logout</button>
       <span class="badge" id="count" hidden></span>
       <button class="theme" id="themeBtn" type="button" aria-label="Switch to dark mode" aria-pressed="false">
         <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
@@ -212,6 +214,23 @@ input:focus,select:focus,.search:focus{outline:none;border-color:var(--accent);b
   </div>
 </dialog>
 
+<!-- Login -->
+<dialog id="loginDlg" aria-labelledby="loginTitle">
+  <form class="dlg" id="loginForm" method="dialog" novalidate>
+    <h2 id="loginTitle">Admin login</h2>
+    <p class="sub">Enter admin credentials to add, edit, or delete records.</p>
+    <div class="fields">
+      <label class="full">Username<input id="l_user" required autocomplete="username"></label>
+      <label class="full">Password<input id="l_pass" type="password" required autocomplete="current-password"></label>
+    </div>
+    <p id="loginErr" role="alert" style="color:var(--err);font-weight:600;margin:12px 0 0"></p>
+    <div class="dlg-actions">
+      <button class="btn line" type="button" id="loginCancel">Cancel</button>
+      <button class="btn" type="submit">Login</button>
+    </div>
+  </form>
+</dialog>
+
 <div class="toast" id="toast" role="status"></div>
 <button class="totop" id="toTop" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 
@@ -221,7 +240,39 @@ input:focus,select:focus,.search:focus{outline:none;border-color:var(--accent);b
   const $ = (id) => document.getElementById(id);
   const container = $('daily_attendanceContainer');
   const STATUSES = ['Present', 'Late', 'Absent'];
+  const ADMIN_USER = 'admin';
+  const ADMIN_PASS = 'admin123';
   let records = [], filter = 'All', query = '', editingId = null, deletingId = null;
+  let isAdmin = sessionStorage.getItem('admin') === '1';
+  let pendingAction = null;
+
+  function syncAuth() {
+    $('loginBtn').hidden = isAdmin;
+    $('logoutBtn').hidden = !isAdmin;
+  }
+  function requireAuth(fn) {
+    if (isAdmin) return fn();
+    pendingAction = fn;
+    $('loginErr').textContent = '';
+    $('loginForm').reset();
+    $('loginDlg').showModal();
+    $('l_user').focus();
+  }
+  $('loginBtn').addEventListener('click', () => requireAuth(() => {}));
+  $('logoutBtn').addEventListener('click', () => {
+    isAdmin = false; sessionStorage.removeItem('admin'); syncAuth(); toast('Logged out.');
+  });
+  $('loginCancel').addEventListener('click', () => { pendingAction = null; $('loginDlg').close(); });
+  $('loginForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if ($('l_user').value.trim() === ADMIN_USER && $('l_pass').value === ADMIN_PASS) {
+      isAdmin = true; sessionStorage.setItem('admin', '1'); syncAuth(); $('loginDlg').close(); toast('Logged in.');
+      if (pendingAction) { const fn = pendingAction; pendingAction = null; fn(); }
+    } else {
+      $('loginErr').textContent = 'Invalid username or password.';
+    }
+  });
+  syncAuth();
 
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const dateInput = (d) => d ? String(d).slice(0, 10) : '';
@@ -325,7 +376,7 @@ input:focus,select:focus,.search:focus{outline:none;border-color:var(--accent);b
     $('formDlg').showModal();
     $('f_student_id').focus();
   }
-  $('addBtn').addEventListener('click', () => openForm(null));
+  $('addBtn').addEventListener('click', () => requireAuth(() => openForm(null)));
   $('cancelBtn').addEventListener('click', () => $('formDlg').close());
 
   $('recForm').addEventListener('submit', async (e) => {
@@ -353,11 +404,11 @@ input:focus,select:focus,.search:focus{outline:none;border-color:var(--accent);b
     const id = btn.closest('tr').dataset.id;
     const rec = records.find(r => r._id === id);
     if (!rec) return;
-    if (btn.dataset.act === 'edit') return openForm(rec);
+    if (btn.dataset.act === 'edit') return requireAuth(() => openForm(rec));
     deletingId = id;
     $('delText').textContent = 'This will permanently remove ' + rec.student_name + '’s record for ' + dateShow(rec.date) + '.';
     $('delErr').textContent = '';
-    $('delDlg').showModal();
+    requireAuth(() => $('delDlg').showModal());
   });
   $('delCancel').addEventListener('click', () => $('delDlg').close());
   $('delConfirm').addEventListener('click', async () => {
